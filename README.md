@@ -1,5 +1,5 @@
 # SAM-Path: A Segment Anything Model for Semantic Segmentation in Digital Pathology
-Pytorch implementation for the SAM-PAth framework described in the paper [SAM-Path: A Segment Anything Model for Semantic Segmentation in Digital Pathology](none), [arxiv](https://arxiv.org/abs/2307.09570) and (_MedAGI 2023, accepted for oral presentation_).  
+Pytorch implementation for the SAM-PAth framework described in the paper [SAM-Path: A Segment Anything Model for Semantic Segmentation in Digital Pathology](https://link.springer.com/chapter/10.1007/978-3-031-47401-9_16), [arxiv](https://arxiv.org/abs/2307.09570) and (_MedAGI 2023, accepted for oral presentation_).  
 <div>
   <img src="imgs/overview.png" width="100%"  alt="The overview of our framework."/>
 </div>
@@ -32,6 +32,7 @@ python main.py --config configs.BCSS --devices 0 --project sampath --name bcss_r
 python main.py --config configs.CRAG --devices 1 --project sampath --name crag_run0
 ```
 Config files are located in the ```configs``` folder. Not the extension ```.py``` should not be included and the sub-folders should be linked by ```.```
+Pretrained SAM and HIPT models can be downloaded from their ogriginal repository: [SAM](https://github.com/facebookresearch/segment-anything#model-checkpoints) and [HIPT](https://github.com/mahmoodlab/HIPT#pre-reqs--installation).
 
 ## Contact
 If you have any questions or concerns, feel free to report issues or directly contact us (Jingwei Zhang <jingwezhang@cs.stonybrook.edu>). 
