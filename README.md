@@ -47,7 +47,7 @@ For example:
 ```
 python predict.py --config configs.BCSS --input_dir path_to_image_directory --data_ext .png --output_dir path_to_output_directory --pretrained /.../model.ckpt  --devices 2
 ```
-Note that we always use label 0 as the unlabeled region. If the dataset does not contain any unlabeled region, all the predicted masks will be subtracted by 1.
+Note that we always use label 0 as the unlabeled region. If the dataset does not contain any unlabeled region, all the predicted masks need be subtracted by 1.
 
 
 ## Contact
