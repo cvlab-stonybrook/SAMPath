@@ -34,6 +34,22 @@ python main.py --config configs.CRAG --devices 1 --project sampath --name crag_r
 Config files are located in the ```configs``` folder. Not the extension ```.py``` should not be included and the sub-folders should be linked by ```.```
 Pretrained SAM and HIPT models can be downloaded from their ogriginal repository: [SAM](https://github.com/facebookresearch/segment-anything#model-checkpoints) and [HIPT](https://github.com/mahmoodlab/HIPT#pre-reqs--installation).
 
+## Predicting
+We used ```predict.py``` to predict the mask of a dataset. 
+```
+usage: predict.py [--config CONFIG_PATH] [--devices GPU_ID]
+                  [--pretrained path_to_pretrained_weights] 
+                  [--input_dir path_to_image_directory] 
+                  [--data_ext image_extension] 
+                  [--output_dir path_to_output_directory]
+```
+For example:
+```
+python predict.py --config configs.BCSS --input_dir path_to_image_directory --data_ext .png --output_dir path_to_output_directory --pretrained /.../model.ckpt  --devices 2
+```
+Note that we always use label 0 as the unlabeled region. If the dataset does not contain any unlabeled region, all the predicted masks will be subtracted by 1.
+
+
 ## Contact
 If you have any questions or concerns, feel free to report issues or directly contact us (Jingwei Zhang <jingwezhang@cs.stonybrook.edu>). 
 

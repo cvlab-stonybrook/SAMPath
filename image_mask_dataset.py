@@ -205,4 +205,53 @@ class GeneralDataModule(LightningDataModule):
         return DataLoader(self.dataset_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers)
 
     def predict_dataloader(self):
-        return DataLoader(self.dataset_test, batch_size=1, shuffle=False, num_workers=self.num_workers),
+        return DataLoader(self.dataset_test, batch_size=1, shuffle=False, num_workers=self.num_workers)
+
+class PredictionDataset(Dataset):
+
+    def __init__(
+            self,
+            dataset_root: str,
+            data_ext: str = ".jpg",
+            augmentation=None,
+            dataset_mean=(0.485, 0.456, 0.406),
+            dataset_std=(0.229, 0.224, 0.225),
+    ):
+        super().__init__()
+
+        self.dataset_root = dataset_root
+        self.data_ext = data_ext
+        self.augmentation = augmentation
+
+        self.tensor_transforms = albumentations.Compose([
+            albumentations.Normalize(mean=dataset_mean, std=dataset_std),
+            ToTensorV2(),
+        ])
+
+        self.img_list = [f for f in os.listdir(self.dataset_root) if f.lower().endswith(data_ext)]
+
+    def __len__(self):
+        return len(self.img_list)
+
+    def process_ignored_classes(self, mask):
+        if self.ignored_classes is not None:
+            if not isinstance(self.ignored_classes, (list, tuple)):
+                self.ignored_classes = [self.ignored_classes]
+            for cls in self.ignored_classes:
+                if cls != 0:
+                    mask[mask == cls] = 0
+        else:
+            mask += 1
+        return mask
+
+    def __getitem__(self, i):
+        img_id = self.img_list[i]
+
+        image = read_rgb_img(os.path.join(self.dataset_root, img_id))
+
+        if self.augmentation is not None:
+            image = self.augmentation(image=image)["image"]
+
+
+        image = self.tensor_transforms(image=image)["image"]
+        return image
